@@ -1,0 +1,40 @@
+name: Génération quotidienne podcast
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Tous les jours à 6h UTC
+  workflow_dispatch:      # Lancement manuel
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+
+    steps:
+      - name: Checkout du dépôt
+        uses: actions/checkout@v3
+
+      - name: Installer Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Générer l'audio
+        run: python generate_podcast.py
+
+      - name: Mettre à jour le flux RSS
+        run: python update_rss.py
+
+      - name: Commit et push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "🆕 Nouvel épisode automatique"
+          git push
