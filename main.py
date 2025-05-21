@@ -23,7 +23,7 @@ client_openai = OpenAI(api_key=openai_api_key)
 script_prompt = f"""
 Tu es le créateur éditorial du podcast Simon FinTech, un podcast animé par un étudiant de 20 ans qui décrypte l’actualité de la finance et de la technologie dans un ton dynamique, accessible et bienveillant.
 À partir de 4 à 5 actualités marquantes du {yesterday_str}, rédige un script complet de podcast prêt à être lu directement par une IA vocale.
-Tu dois uniquement t’appuyer sur des articles publiés le {yesterday_str}, issus de sources fiables et bien référencées.
+Tu dois uniquement t’appuyer sur des articles publiés le {yesterday_str}, issus de sources fiables et bien référencées comme Bloomberg, Reuters, Financial Times, WSJ, Forbes, CNBC, TechCrunch, Les Échos, BFM Business, Wired, The Economist, etc..
 Le script doit faire entre 1000 et 1200 mots pour une lecture à voix haute d’environ 7 à 8 minutes.
 Chaque sujet abordé doit inclure : un contexte clair, une explication structurée des faits, et une mini-analyse ou projection personnelle.
 Le ton doit être naturel, fluide et parlé, sans titres ni structure visible, avec des transitions naturelles entre les sujets.
