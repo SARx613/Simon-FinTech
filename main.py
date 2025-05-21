@@ -74,7 +74,7 @@ from elevenlabs.client import ElevenLabs
 client_elevenlabs = ElevenLabs(api_key=eleven_api_key)
 
 audio = client_elevenlabs.text_to_speech.convert(
-    text=script_text[:200],
+    text=script_text,
     voice_id="pNInz6obpgDQGcFmaJgB",
     model_id="eleven_multilingual_v2",
     output_format="mp3_44100_128"
