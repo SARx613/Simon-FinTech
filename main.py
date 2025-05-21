@@ -35,7 +35,7 @@ response = client_openai.chat.completions.create(
     model="gpt-4o",
     messages=[{"role": "user", "content": prompt}],
     temperature=0.7,
-    max_tokens=2000
+    max_tokens=500
 )
 
 script_text = response.choices[0].message.content.strip()
@@ -45,21 +45,3 @@ with open(script_filename, "w", encoding="utf-8") as f:
     f.write(script_text)
 print(f"📝 Script sauvegardé : {script_filename}")
 
-
-# 6. Initialiser le client ElevenLabs
-client_elevenlabs = ElevenLabs(api_key=eleven_api_key)
-
-# 7. Génération audio avec ElevenLabs
-audio = client_elevenlabs.text_to_speech.convert(
-    text= script_text[:200],
-    voice_id="pNInz6obpgDQGcFmaJgB",  # Remplace par l'ID de la voix souhaitée
-    model_id="eleven_multilingual_v2",
-    output_format="mp3_44100_128"
-)
-
-os.makedirs("podcasts", exist_ok=True)
-with open(filename, "wb") as f:
-    for chunk in audio:
-        f.write(chunk)
-
-print(f"✅ Podcast généré et sauvegardé : {filename}")
