@@ -13,6 +13,7 @@ eleven_api_key = os.getenv("ELEVENLABS_API_KEY")
 today = datetime.date.today()
 today_str = today.strftime("%d %B %Y")  # exemple : "20 mai 2025"
 filename = f"podcasts/podcast_{today.strftime('%d-%m-%Y')}.mp3"
+script_filename = f"scripts/script_{date_tag}.txt"
 
 # 3. Initialiser OpenAI
 client_openai = OpenAI(api_key=openai_api_key)
@@ -38,6 +39,12 @@ response = client_openai.chat.completions.create(
 )
 
 script_text = response.choices[0].message.content.strip()
+
+os.makedirs("scripts", exist_ok=True)
+with open(script_filename, "w", encoding="utf-8") as f:
+    f.write(script_text)
+print(f"📝 Script sauvegardé : {script_filename}")
+
 
 # 6. Initialiser le client ElevenLabs
 client_elevenlabs = ElevenLabs(api_key=eleven_api_key)
