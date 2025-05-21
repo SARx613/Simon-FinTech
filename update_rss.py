@@ -1,6 +1,7 @@
 from feedgen.feed import FeedGenerator
 import datetime
 import os
+import shutil
 
 def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
     fg = FeedGenerator()
@@ -31,6 +32,14 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
             episode.pubDate(date_obj)
 
     fg.rss_file(output_file)
+    # Créer un historique quotidien du flux RSS
+    today = datetime.date.today()
+    rss_daily = f"rss_history/rss_{today.strftime('%d-%m-%Y')}.xml"
+    
+    os.makedirs("rss_history", exist_ok=True)
+    shutil.copyfile("rss.xml", rss_daily)
+
+print(f"🗂️ RSS du jour sauvegardé dans : {rss_daily}")
     print("✅ RSS mis à jour")
 
 # Exemple d’utilisation
