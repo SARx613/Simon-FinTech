@@ -82,7 +82,7 @@ audio = client_elevenlabs.text_to_speech.convert(
 
 # 8. Sauvegarder l'audio
 os.makedirs("podcasts", exist_ok=True)
-audio_filename = f"podcasts/podcast_{date_tag} - {episode_title}.mp3"
+audio_filename = f"podcasts/{date_tag} - {episode_title}.mp3"
 with open(audio_filename, "wb") as f:
     for chunk in audio:
         f.write(chunk)
