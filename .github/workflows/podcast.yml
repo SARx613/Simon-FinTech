@@ -35,6 +35,6 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email actions@github.com
-          git add .
-          git commit -m "🆕 Épisode généré automatiquement"
+          git add podcasts/*.mp3 scripts/*.txt rss.xml || true
+          git commit -m "🎙️ Épisode auto-généré le $(date +'%d-%m-%Y')" || echo "Aucun changement à pousser"
           git push
