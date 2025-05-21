@@ -44,7 +44,7 @@ client_elevenlabs = ElevenLabs(api_key=eleven_api_key)
 
 # 7. Génération audio avec ElevenLabs
 audio = client_elevenlabs.text_to_speech.convert(
-    text= script_text,
+    text= script_text[:200],
     voice_id="pNInz6obpgDQGcFmaJgB",  # Remplace par l'ID de la voix souhaitée
     model_id="eleven_multilingual_v2",
     output_format="mp3_44100_128"
