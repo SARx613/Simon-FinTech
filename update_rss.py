@@ -17,7 +17,7 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
     for filename in sorted(os.listdir(audio_folder)):
         if filename.endswith(".mp3"):
             date_str = filename.replace("podcast_", "").replace(".mp3", "")
-            date_obj = datetime.datetime.strptime(date_str, "%Y%m%d").replace(tzinfo=datetime.timezone.utc)
+            date_obj = datetime.datetime.strptime(date_str, "%d-%m-%Y").replace(tzinfo=datetime.timezone.utc)
 
             episode = fg.add_entry()
             episode.id(f"https://sarx613.github.io/simon-fintech/podcasts/{filename}")
