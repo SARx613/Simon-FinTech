@@ -3,12 +3,12 @@ name: Génération quotidienne podcast
 on:
   schedule:
     - cron: '0 6 * * *'  # Tous les jours à 6h UTC
-  workflow_dispatch:      # Lancement manuel
+  workflow_dispatch:      # Lancement manuel possible
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: API_KEY
+    environment: API_KEY  # ← doit correspondre au nom de ton Environment dans GitHub
 
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -26,16 +26,15 @@ jobs:
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
-      - name: Générer l'audio
-        run: python generate_podcast.py
-
-      - name: Mettre à jour le flux RSS
-        run: python update_rss.py
-
-      - name: Commit et push
+      - name: Exécuter les scripts Python
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          python main.py
+          python update_rss.py
+
+      - name: Commit et push des fichiers mis à jour
+        run: |
+          git config user.name github-actions
+          git config user.email actions@github.com
           git add .
-          git commit -m "🆕 Nouvel épisode automatique"
+          git commit -m "🆕 Épisode généré automatiquement"
           git push
