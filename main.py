@@ -78,8 +78,6 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
     with open("script_hier.txt", "w", encoding="utf-8") as f:
         f.write(script_today)
     print("📝 script_hier.txt mis à jour.")
-        
-except Exception as e:
-    print(f"❌ Erreur durant le traitement : {e}")
+
 else:
     print("🟡 Aucun changement détecté dans le script. Aucun podcast généré.")
