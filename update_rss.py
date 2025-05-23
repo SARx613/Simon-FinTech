@@ -14,7 +14,7 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
     fg.image("https://sarx613.github.io/Simon-FinTech/logo-podcast.png")
     fg.description("Le podcast qui rend la finance et la tech simples, vivantes et passionnantes.")
     fg.language("fr")
-    fg.author({'name': 'Simon FinTech', 'email': 'ton.email@exemple.com'})
+    fg.author({'name': 'Simon FinTech', 'email': 'simon5.amar@gmail.com'})
     fg.podcast.itunes_author("Simon FinTech")
     fg.podcast.itunes_explicit("no")
     fg.link(href="https://sarx613.github.io/Simon-FinTech/rss.xml", rel="self")
