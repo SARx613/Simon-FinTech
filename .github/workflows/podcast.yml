@@ -1,9 +1,9 @@
 name: Génération quotidienne podcast
 
-#on:
-#  schedule:
-  #  - cron: '39 12 * * *'  # Tous les jours à 6h UTC
-#workflow_dispatch:      # Lancement manuel possible
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Tous les jours à 6h UTC
+  workflow_dispatch:      # Lancement manuel possible
 
 jobs:
   build:
