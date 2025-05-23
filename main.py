@@ -29,3 +29,10 @@ script_hier = lire_script("script_hier.txt")
 print(script_today)
 print("_______________")
 print(script_hier)
+
+# 10. Mettre à jour le script d’hier
+with open("script_hier.txt", "w", encoding="utf-8") as f:
+    f.write(script_today)
+print("📝 script_hier.txt mis à jour.")
+
+print(script_hier)
