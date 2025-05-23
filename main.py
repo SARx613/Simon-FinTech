@@ -35,4 +35,5 @@ with open("script_hier.txt", "w", encoding="utf-8") as f:
     f.write(script_today)
 print("📝 script_hier.txt mis à jour.")
 
-print(script_hier)
+script_hier_updated = lire_script("script_hier.txt")
+print(script_hier_updated)
