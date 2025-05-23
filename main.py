@@ -23,7 +23,10 @@ def lire_script(fichier):
         with open(fichier, "r", encoding="utf-8") as f:
             return f.read().strip()
     return ""
-    
+
+script_today = lire_script("script_today.txt")
+script_hier = lire_script("script_hier.txt")
+
 # 5. Comparaison des scripts
 if script_today != script_hier and script_today:
     # 6. Générer un titre avec GPT
