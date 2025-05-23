@@ -60,8 +60,8 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
 
     # 8. Générer l'audio
     audio = client_elevenlabs.text_to_speech.convert(
-        text=script_today[:100],
-        voice_id="pNInz6obpgDQGcFmaJgB",  # Voix à personnaliser si besoin
+        text=script_today,
+        voice_id="6C8Cux23MlWRYPZwEh55",  # Voix à personnaliser si besoin
         model_id="eleven_multilingual_v2",
         output_format="mp3_44100_128"
     )
