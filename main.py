@@ -30,14 +30,14 @@ if script_today != script_hier and script_today:
     paragraphs = script_today.split("\n\n")
     first_actu = paragraphs[1] if len(paragraphs) > 1 else script_today[:300]
 
-    title_prompt = f""
+    title_prompt = f"""
 Voici le début d’un épisode de podcast sur la tech et la finance : 
 
 {first_actu}
 
 Donne-moi un titre accrocheur, percutant, original et court (max 15 mots), qui donne envie d’écouter cet épisode.
 Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
-""
+"""
 
     title_response = client_openai.chat.completions.create(
         model="gpt-4o",
