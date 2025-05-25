@@ -17,6 +17,7 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
     fg.author({'name': 'Simon FinTech', 'email': 'simon5.amar@gmail.com'})
     fg.podcast.itunes_author("Simon FinTech")
     fg.podcast.itunes_explicit("no")
+    fg.podcast.itunes_owner(name="Simon FinTech", email="simon5.amar@gmail.com")
     fg.link(href="https://sarx613.github.io/Simon-FinTech/rss.xml", rel="self")
 
     # Regex pour détecter les fichiers avec nom commençant par dd-mm-YYYY
