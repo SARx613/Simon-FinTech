@@ -1,14 +1,6 @@
 Vous êtes-vous déjà demandé comment les États-Unis allaient enfin encadrer les cryptos, ou comment l’IA transforme déjà nos banques de demain ? Eh bien, l’actualité d’hier était particulièrement riche sur ces sujets.
 
-Salut, c’est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes.
-
-On commence fort avec une nouvelle qui pourrait marquer un tournant dans la régulation des crypto-actifs aux États-Unis. Je parle du vote de la Chambre des représentants qui a adopté le **FIT21**, un projet de loi qui cherche à clarifier les règles autour des crypto-monnaies. L’idée, c’est de donner un cadre juridique plus cohérent pour que les entreprises crypto sachent enfin à quelle autorité elles doivent rendre des comptes. Le texte établit une distinction plus claire entre les rôles de la SEC, le gendarme des marchés financiers, et la CFTC, qui supervise les produits dérivés.
-
-Concrètement, les tokens considérés comme « suffisamment décentralisés » passeraient sous la coupe de la CFTC, tandis que la SEC garderait la main sur les actifs qui ressemblent plus à des titres financiers. C’est un vrai pas vers la fin de l’ambiguïté réglementaire qui freinait pas mal d’initiatives dans la crypto aux États-Unis. Pour une fois, démocrates et républicains ont réussi à se mettre d’accord, ce qui montre l’importance du sujet. Cela dit, la Maison Blanche reste prudente. Biden a menacé d’un veto si certaines garanties ne sont pas ajoutées. Et Gary Gensler, le patron de la SEC, a clairement exprimé ses réserves en disant que ce texte pourrait créer des failles dans la régulation actuelle.
-
-Personnellement, je trouve que c’est une avancée majeure. Le marché crypto a besoin de stabilité et de confiance pour attirer les gros investisseurs, et une régulation claire peut faire toute la différence. Mais tout dépendra de la façon dont la loi sera appliquée concrètement. On garde ça à l’œil.
-
-Deuxième actu forte : l’intelligence artificielle, et plus précisément comment elle est en train de s’implanter à grande vitesse dans les institutions financières. Une étude publiée hier sur arXiv montre que les banques, assureurs et gestionnaires d’actifs sont de plus en plus nombreux à intégrer des IA génératives dans leur quotidien. On parle ici de modèles comme ChatGPT ou Claude, mais adaptés au secteur financier. Ils servent à automatiser le service client, analyser les risques, produire des rapports ou encore prédire des tendances de marché.
+Salut, c’est Simon, bienvenue dans le podcast qui rend la financutomatiser le service client, analyser les risques, produire des rapports ou encore prédire des tendances de marché.
 
 Goldman Sachs, JP Morgan, HSBC… tout le monde y va de sa solution maison ou de son partenariat avec une startup spécialisée. Ce que révèle l’étude, c’est que les gains de productivité sont réels. Par exemple, certaines équipes réduisent le temps d’analyse de données financières de plusieurs heures à quelques minutes. C’est un changement radical dans la façon de travailler.
 
