@@ -62,7 +62,7 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
     audio = client_elevenlabs.text_to_speech.convert(
         text=script_today,
         voice_id="OPCL81coXM3AEo8gUxHM",  # Voix à personnaliser si besoin
-        model_id="eleven_flash_v2_5",
+        model_id="eleven_multilingual_v2",
         output_format="mp3_44100_128"
     )
 
