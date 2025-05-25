@@ -32,7 +32,7 @@ script_hier = lire_script("script_hier.txt")
 if script_today != script_hier and script_today:
     # 6. Générer un titre avec GPT
     paragraphs = script_today.split("\n\n")
-    print(paragraphs)
+    print(p for p in paragraphs)
     first_actu = next((p for p in paragraphs if p.strip()), script_today[:300])
 
     title_prompt = f"""
@@ -69,7 +69,7 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
 
     blocs = decouper_paragraphes(paragraphs, nb_parts=4)
     os.makedirs("podcasts", exist_ok=True)
-    print(blocs)
+    print(b for b in blocs)
 
 else:
     print("🟡 Aucun changement détecté dans le script. Aucun podcast généré.")
