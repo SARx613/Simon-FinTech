@@ -65,7 +65,9 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
         model_id="eleven_multilingual_v2",
         output_format="mp3_44100_128"
     )
-
+    print(audio)
+    for i in audio:
+        print(i)
     # 9. Sauvegarder le fichier audio
     os.makedirs("podcasts", exist_ok=True)
     audio_filename = f"podcasts/{date_tag} - {episode_title}.mp3"
