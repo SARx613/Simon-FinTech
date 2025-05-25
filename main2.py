@@ -32,8 +32,6 @@ script_hier = lire_script("script_hier.txt")
 if script_today != script_hier and script_today:
     # 6. Générer un titre avec GPT
     paragraphs = script_today.split("\n\n")
-    for p in paragraphs:
-        print(p)
     first_actu = next((p for p in paragraphs if p.strip()), script_today[:300])
 
     title_prompt = f"""
@@ -70,8 +68,29 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
 
     blocs = decouper_paragraphes(paragraphs, nb_parts=4)
     os.makedirs("podcasts", exist_ok=True)
-    for b in blocs:
-        print(b)
+
+    for idx, bloc in enumerate(blocs, start=1):
+        texte_bloc = "\n\n".join(bloc).strip()
+        if texte_bloc:
+            try:
+                audio = client_elevenlabs.text_to_speech.convert(
+                    text=texte_bloc,
+                    voice_id="OPCL81coXM3AEo8gUxHM",
+                    model_id="eleven_multilingual_v2",
+                    output_format="mp3_44100_128"
+                )
+                audio_filename = f"podcasts/{date_tag} - {safe_title} - partie_{idx}.mp3"
+                with open(audio_filename, "wb") as f:
+                    for chunk in audio:
+                        f.write(chunk)
+                print(f"✅ Partie {idx} générée : {audio_filename}")
+            except Exception as e:
+                print(f"❌ Erreur sur la partie {idx} : {e}")
+
+    # 9. Mettre à jour script_hier
+    with open("script_hier.txt", "w", encoding="utf-8") as f:
+        f.write(script_today)
+    print("📝 script_hier.txt mis à jour.")
 
 else:
     print("🟡 Aucun changement détecté dans le script. Aucun podcast généré.")
