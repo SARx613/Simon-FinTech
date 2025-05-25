@@ -3,9 +3,6 @@ import datetime
 from openai import OpenAI
 from elevenlabs.client import ElevenLabs
 from dotenv import load_dotenv
-import math
-import re
-from pydub import AudioSegment
 
 # 1. Charger les clés API
 load_dotenv()
@@ -57,45 +54,17 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
     # 7. Sauvegarder script avec titre
     os.makedirs("scripts", exist_ok=True)
     script_filename = f"scripts/{date_tag} - {episode_title}.txt"
+    with open(script_filename, "w", encoding="utf-8") as f:
+        f.write(script_today)
     print(f"📝 Script sauvegardé : {script_filename}")
 
     # 8. Générer l'audio
-    # 8. Diviser en blocs (1 paragraphe = 1 bloc)
-    blocs = [p.strip() for p in paragraphs if p.strip()]
-    os.makedirs("podcasts", exist_ok=True)
-    morceaux_paths = []
-
-    for idx, bloc in enumerate(blocs, start=1):
-        try:
-            audio = generate(
-                text=bloc,
-                voice="OPCL81coXM3AEo8gUxHM",  # Ta voix personnalisée
-                model="eleven_multilingual_v2",
-                api_key=eleven_api_key
-            )
-            morceau_path = f"podcasts/tmp_{idx}.mp3"
-            save(audio, morceau_path)
-            morceaux_paths.append(morceau_path)
-            print(f"✅ Audio {idx} généré.")
-        except Exception as e:
-            print(f"❌ Erreur génération audio {idx} : {e}")
-
-    # 9. Fusionner tous les morceaux
-    try:
-        podcast_final = AudioSegment.empty()
-        for morceau in morceaux_paths:
-            segment = AudioSegment.from_mp3(morceau)
-            podcast_final += segment
-        final_path = f"podcasts/{date_tag} - {safe_title}.mp3"
-        podcast_final.export(final_path, format="mp3")
-        print(f"🎧 Podcast final exporté : {final_path}")
-    except Exception as e:
-        print(f"❌ Erreur fusion audio : {e}")
-
-    # 10. Nettoyer fichiers intermédiaires
-    for morceau in morceaux_paths:
-        os.remove(morceau)
-
+    audio = client_elevenlabs.text_to_speech.convert(
+        text=script_today,
+        voice_id="OPCL81coXM3AEo8gUxHM",  # Voix à personnaliser si besoin
+        model_id="eleven_flash_v2_5",
+        output_format="mp3_44100_128"
+    )
 
     # 9. Sauvegarder le fichier audio
     os.makedirs("podcasts", exist_ok=True)
