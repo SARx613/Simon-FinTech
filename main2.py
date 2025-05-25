@@ -32,6 +32,7 @@ script_hier = lire_script("script_hier.txt")
 if script_today != script_hier and script_today:
     # 6. Générer un titre avec GPT
     paragraphs = script_today.split("\n\n")
+    print(paragraphs)
     first_actu = next((p for p in paragraphs if p.strip()), script_today[:300])
 
     title_prompt = f"""
