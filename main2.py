@@ -51,29 +51,47 @@ Ne mets pas la date. Pas de ponctuation superflue. Juste le titre.
     episode_title = title_response.choices[0].message.content.strip()
     print(f"🎯 Titre généré : {episode_title}")
 
-    # 7. Sauvegarder script avec titre
+    # 7. Sauvegarder le script avec le titre
     os.makedirs("scripts", exist_ok=True)
     script_filename = f"scripts/{date_tag} - {episode_title}.txt"
     with open(script_filename, "w", encoding="utf-8") as f:
         f.write(script_today)
     print(f"📝 Script sauvegardé : {script_filename}")
 
-    # 8. Générer l'audio
-    audio = client_elevenlabs.text_to_speech.convert(
-        text=script_today,
-        voice_id="OPCL81coXM3AEo8gUxHM",  # Voix à personnaliser si besoin
-        model_id="eleven_multilingual_v2",
-        output_format="mp3_44100_128"
-    )
-    print(audio)
-    for i in audio:
-        print(i)
-    # 9. Sauvegarder le fichier audio
+    # 8. Générer l'audio ligne par ligne
+    voice_id = "6C8Cux23MlWRYPZwEh55"
+    model_id = "eleven_flash_v2_5"
+    output_dir = "temp_audio"
+    os.makedirs(output_dir, exist_ok=True)
+
+    audio_parts = []
+    for i, line in enumerate(script_today.splitlines()):
+        line = line.strip()
+        if line:
+            audio = client_elevenlabs.text_to_speech.convert(
+                text=line,
+                voice_id=voice_id,
+                model_id=model_id,
+                output_format="mp3_44100_128"
+            )
+            part_filename = os.path.join(output_dir, f"part_{i:03}.mp3")
+            with open(part_filename, "wb") as f:
+                for chunk in audio:
+                    f.write(chunk)
+            audio_parts.append(part_filename)
+            print(f"🔊 Segment {i+1} généré.")
+
+    # 9. Fusionner les fichiers audio (via pydub)
+    from pydub import AudioSegment
+
+    final_audio = AudioSegment.empty()
+    for part in audio_parts:
+        segment = AudioSegment.from_mp3(part)
+        final_audio += segment
+
     os.makedirs("podcasts", exist_ok=True)
     audio_filename = f"podcasts/{date_tag} - {episode_title}.mp3"
-    with open(audio_filename, "wb") as f:
-        for chunk in audio:
-            f.write(chunk)
+    final_audio.export(audio_filename, format="mp3", bitrate="128k")
     print(f"✅ Podcast généré et sauvegardé : {audio_filename}")
 
     # 10. Mettre à jour le script d’hier
