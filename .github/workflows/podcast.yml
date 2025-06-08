@@ -28,7 +28,7 @@ jobs:
 
       - name: Exécuter les scripts Python
         run: |
-          python main.py
+          #python main.py
           python update_rss.py
 
       - name: Commit et push des fichiers mis à jour
