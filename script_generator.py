@@ -36,18 +36,34 @@ LLM_CONFIGS = {
 }
 
 PODCAST_PROMPT_TEMPLATE = """
-Tu es le créateur éditorial du podcast Simon FinTech, un podcast animé par un étudiant de 20 ans qui décrypte l'actualité de la finance et de la technologie dans un ton dynamique, accessible et bienveillant. 
+Tu es Simon, 20 ans, l'animateur du podcast quotidien "Simon FinTech". Tu décryptes l'actu finance et tech avec une énergie contagieuse : tu es vif, curieux, un peu insolent, tu as des convictions et tu n'as pas peur de les partager. Ton style rappelle les meilleurs vulgarisateurs : clair, rythmé, avec des punchlines, des images parlantes, des questions qui accrochent. Tu parles à un ami intelligent, pas à un amphi.
 
-À partir de plusieurs actualités marquantes d'aujourd'hui, rédige un script complet de podcast prêt à être lu directement par une IA vocale. Tu dois uniquement t'appuyer sur des articles publiés aujourd'hui (fournis ci-dessous), issus de sources fiables et bien référencées. 
+Rédige le script COMPLET de l'épisode du jour, prêt à être lu tel quel par une voix de synthèse (donc uniquement le texte à dire, aucune indication scénique).
 
-Le script doit faire entre 600 et 700 mots pour une lecture à voix haute d'environ 5 minutes. Chaque sujet abordé doit inclure : un contexte clair, une explication structurée des faits, et une mini-analyse ou projection personnelle. Le ton doit être naturel, fluide et parlé, sans titres ni structure visible, avec des transitions naturelles entre les sujets. 
+═══ LE TON (le plus important) ═══
+- De la PÊCHE : phrases qui claquent, verbes forts, rythme vivant. Alterne phrases courtes percutantes et phrases plus amples.
+- Rends chaque sujet CAPTIVANT : pourquoi ça compte pour l'auditeur ? qu'est-ce que ça change concrètement ? Trouve l'angle qui intrigue.
+- Prends position. Donne ton avis franc ("moi je pense que…", "soyons clairs…", "et là, ça devient intéressant…").
+- Zéro langue de bois, zéro remplissage, zéro formule scolaire type "tout d'abord / ensuite / en conclusion". Raconte, ne liste pas.
+- Utilise des images, des comparaisons, une pointe d'humour quand c'est pertinent.
 
-Commence toujours par une amorce contenant une question pour mettre en bouche la première actualité puis enchaine avec : "Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes." 
-Termine systématiquement par : "À demain pour un nouveau point sur l'actu tech !"
+═══ LE FORMAT ═══
+- Longueur IMPÉRATIVE : entre 1200 et 1400 mots (6-7 min de lecture). Ne raccourcis pas.
+- Traite 4 à 5 sujets. Pour chacun : accroche qui donne envie → les faits clés avec les vrais chiffres et acteurs → ton analyse/projection. Développe, ne survole jamais.
+- Transitions fluides et malignes entre les sujets (un fil rouge, un clin d'œil, une bascule d'idée) — jamais "passons au sujet suivant".
+- Priorise les sujets les plus marquants et récents (marchés, IA, crypto, grandes boîtes tech, deals, régulation).
 
-IMPORTANT : Base-toi UNIQUEMENT sur les articles fournis ci-dessous. N'invente aucune information. Ne mentionne pas de sources dans le texte lu.
+═══ CADRE OBLIGATOIRE ═══
+- Commence par une accroche forte (une question ou une phrase choc liée à la première actu), puis ENCHAÎNE avec, mot pour mot : "Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes."
+- Termine EXACTEMENT par : "À demain pour un nouveau point sur l'actu tech !"
 
-Voici les articles d'actualité du jour :
+═══ FIABILITÉ (non négociable) ═══
+- Base-toi EXCLUSIVEMENT sur les articles fournis. C'est ta seule source de vérité.
+- N'invente JAMAIS un chiffre, un nom, un montant, une citation ou un événement absent des articles. Dans le doute, reste général plutôt que d'inventer.
+- Les articles peuvent être en anglais : traduis et reformule naturellement en français.
+- Ne cite aucun média ni source dans le texte lu. Tes avis sont clairement des opinions, pas des faits.
+
+Voici les articles d'actualité du jour (ta seule source autorisée) :
 {articles_text}
 """
 
@@ -56,8 +72,9 @@ def _format_articles_for_prompt(articles: list[dict]) -> str:
     """Formate la liste d'articles en texte pour le prompt."""
     parts = []
     for i, art in enumerate(articles, 1):
-        # Tronquer le texte à ~1500 caractères pour rester dans les limites de tokens
-        text = art["text"][:1500]
+        # Tronquer le texte à ~2500 caractères : assez de matière pour un script long,
+        # tout en restant confortablement dans la fenêtre de contexte de Llama 3.3.
+        text = art["text"][:2500]
         parts.append(f"--- Article {i} ---\nTitre : {art['title']}\n\n{text}\n")
     return "\n".join(parts)
 
@@ -126,23 +143,47 @@ def generate_script(articles: list[dict], date: datetime.date = None) -> str:
 
     client, model = _get_llm_client()
 
+    messages = [{"role": "user", "content": prompt}]
     response = client.chat.completions.create(
         model=model,
-        messages=[{"role": "user", "content": prompt}],
+        messages=messages,
         temperature=0.7,
-        max_tokens=2500,
+        max_tokens=3500,  # marge confortable pour un script de ~1400 mots
     )
-
     script = response.choices[0].message.content.strip()
-
-    # Validation basique
     word_count = len(script.split())
     logger.info(f"Script généré : {word_count} mots")
 
-    if word_count < 500:
-        logger.warning(f"Script anormalement court ({word_count} mots). Vérifier la qualité.")
-    elif word_count > 1500:
-        logger.warning(f"Script anormalement long ({word_count} mots). Possible dépassement.")
+    # Relance automatique si le script est trop court pour un épisode 6-7 min.
+    # Le LLM a tendance à sous-livrer : on lui demande d'étoffer sa propre réponse.
+    TARGET_MIN = 1100
+    if word_count < TARGET_MIN:
+        logger.info(f"Script trop court ({word_count} mots < {TARGET_MIN}). Relance pour étoffer…")
+        messages.append({"role": "assistant", "content": script})
+        messages.append({
+            "role": "user",
+            "content": (
+                f"Ce script ne fait que {word_count} mots, c'est trop court. "
+                f"Réécris-le COMPLÈTEMENT en visant 1200 à 1400 mots : développe davantage "
+                f"chaque sujet (plus de contexte, plus de détails chiffrés, une vraie analyse "
+                f"personnelle), sans inventer d'information absente des articles. "
+                f"Garde la même intro et la même conclusion. Renvoie uniquement le script final."
+            ),
+        })
+        retry = client.chat.completions.create(
+            model=model, messages=messages, temperature=0.7, max_tokens=3500,
+        )
+        retry_script = retry.choices[0].message.content.strip()
+        retry_words = len(retry_script.split())
+        logger.info(f"Script étoffé : {retry_words} mots")
+        # On garde la version la plus longue des deux
+        if retry_words > word_count:
+            script, word_count = retry_script, retry_words
+
+    if word_count < 800:
+        logger.warning(f"Script encore court ({word_count} mots) malgré la relance.")
+    elif word_count > 1600:
+        logger.warning(f"Script très long ({word_count} mots). Épisode possiblement > 8 min.")
 
     return script
 

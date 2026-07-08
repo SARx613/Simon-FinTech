@@ -1,2 +1,230 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Simon FinTech</title><link>https://sarx613.github.io/Simon-FinTech/rss.xml</link><description>Le podcast qui rend la finance et la tech simples, vivantes et passionnantes.</description><atom:link href="https://sarx613.github.io/Simon-FinTech/rss.xml" rel="self"/><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://sarx613.github.io/Simon-FinTech/logo-podcast.png</url><title>Simon FinTech</title><link>https://sarx613.github.io/Simon-FinTech/rss.xml</link></image><language>fr</language><lastBuildDate>Wed, 21 May 2025 08:35:45 +0000</lastBuildDate><item><title>Simon FinTech – Actu du 21 May 2025</title><description>Épisode quotidien de Simon FinTech.</description><guid isPermaLink="false">https://sarx613.github.io/simon-fintech/podcasts/podcast_20250521.mp3</guid><enclosure url="https://sarx613.github.io/simon-fintech/podcasts/podcast_20250521.mp3" length="0" type="audio/mpeg"/><pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate></item></channel></rss>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>Simon FinTech</title>
+    <link>https://sarx613.github.io/Simon-FinTech/rss.xml</link>
+    <description>Le podcast qui rend la finance et la tech simples, vivantes et passionnantes. Un décryptage quotidien de l'actualité.</description>
+    <atom:link href="https://sarx613.github.io/Simon-FinTech/rss.xml" rel="self"/>
+    <docs>http://www.rssboard.org/rss-specification</docs>
+    <generator>python-feedgen</generator>
+    <image>
+      <url>https://sarx613.github.io/Simon-FinTech/logo_podcast.png</url>
+      <title>Simon FinTech</title>
+      <link>https://sarx613.github.io/Simon-FinTech/rss.xml</link>
+    </image>
+    <language>fr</language>
+    <lastBuildDate>Wed, 08 Jul 2026 15:58:45 +0000</lastBuildDate>
+    <itunes:author>Simon</itunes:author>
+    <itunes:category text="Business">
+      <itunes:category text="Investing"/>
+    </itunes:category>
+    <itunes:image href="https://sarx613.github.io/Simon-FinTech/logo_podcast.png"/>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:owner>
+      <itunes:name>Simon</itunes:name>
+      <itunes:email>simon5.amar@gmail.com</itunes:email>
+    </itunes:owner>
+    <itunes:summary>Le podcast qui rend la finance et la tech simples, vivantes et passionnantes. Un décryptage quotidien de l'actualité.</itunes:summary>
+    <itunes:type>episodic</itunes:type>
+    <item>
+      <title>La Grande Évasion : Pourquoi les Licornes Britaniques Fuient la Bourse de Londres</title>
+      <description>Épisode de Simon FinTech — La Grande Évasion : Pourquoi les Licornes Britaniques Fuient la Bourse de Londres. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/08-06-2025 - La Grande Évasion : Pourquoi les Licornes Britaniques Fuient la Bourse de Londres.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/08-06-2025 - La Grande Évasion : Pourquoi les Licornes Britaniques Fuient la Bourse de Londres.mp3" length="5691395" type="audio/mpeg"/>
+      <pubDate>Sun, 08 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>La Grande Évasion : Pourquoi les Licornes Britaniques Fuient la Bourse de Londres</itunes:summary>
+    </item>
+    <item>
+      <title>La finance et la tech à la croisée des chemins</title>
+      <description>Épisode de Simon FinTech — La finance et la tech à la croisée des chemins. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/08-07-2026 - La finance et la tech à la croisée des chemins.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/08-07-2026 - La finance et la tech à la croisée des chemins.mp3" length="2699420" type="audio/mpeg"/>
+      <pubDate>Wed, 08 Jul 2026 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>La finance et la tech à la croisée des chemins</itunes:summary>
+    </item>
+    <item>
+      <title>Meta mise 10 milliards sur Scale AI pour dominer l'IA et défier Google et OpenAI</title>
+      <description>Épisode de Simon FinTech — Meta mise 10 milliards sur Scale AI pour dominer l'IA et défier Google et OpenAI. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/09-06-2025 - Meta mise 10 milliards sur Scale AI pour dominer l'IA et défier Google et OpenAI.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/09-06-2025 - Meta mise 10 milliards sur Scale AI pour dominer l'IA et défier Google et OpenAI.mp3" length="4340551" type="audio/mpeg"/>
+      <pubDate>Mon, 09 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Meta mise 10 milliards sur Scale AI pour dominer l'IA et défier Google et OpenAI</itunes:summary>
+    </item>
+    <item>
+      <title>Walmart Réinvente la Carte de Crédit et Déclare la Guerre aux Banques Traditionnelles</title>
+      <description>Épisode de Simon FinTech — Walmart Réinvente la Carte de Crédit et Déclare la Guerre aux Banques Traditionnelles. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/10-06-2025 - Walmart Réinvente la Carte de Crédit et Déclare la Guerre aux Banques Traditionnelles.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/10-06-2025 - Walmart Réinvente la Carte de Crédit et Déclare la Guerre aux Banques Traditionnelles.mp3" length="6279463" type="audio/mpeg"/>
+      <pubDate>Tue, 10 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Walmart Réinvente la Carte de Crédit et Déclare la Guerre aux Banques Traditionnelles</itunes:summary>
+    </item>
+    <item>
+      <title>La Crypto : Nouveau Refuge Numérique Dépassant l'Or et les Actions Mondiales</title>
+      <description>Épisode de Simon FinTech — La Crypto : Nouveau Refuge Numérique Dépassant l'Or et les Actions Mondiales. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/11-06-2025 - La Crypto : Nouveau Refuge Numérique Dépassant l'Or et les Actions Mondiales.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/11-06-2025 - La Crypto : Nouveau Refuge Numérique Dépassant l'Or et les Actions Mondiales.mp3" length="5410526" type="audio/mpeg"/>
+      <pubDate>Wed, 11 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>La Crypto : Nouveau Refuge Numérique Dépassant l'Or et les Actions Mondiales</itunes:summary>
+    </item>
+    <item>
+      <title>Tech &amp; Finance : Simplifier l'Inaccessible pour une Aventure Passionnante</title>
+      <description>Épisode de Simon FinTech — Tech &amp; Finance : Simplifier l'Inaccessible pour une Aventure Passionnante. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/12-06-2025 - Tech &amp; Finance : Simplifier l'Inaccessible pour une Aventure Passionnante.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/12-06-2025 - Tech &amp; Finance : Simplifier l'Inaccessible pour une Aventure Passionnante.mp3" length="4812009" type="audio/mpeg"/>
+      <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Tech &amp; Finance : Simplifier l'Inaccessible pour une Aventure Passionnante</itunes:summary>
+    </item>
+    <item>
+      <title>Dollar en chute libre tensions géopolitiques et opportunités sur les marchés mondiaux</title>
+      <description>Épisode de Simon FinTech — Dollar en chute libre tensions géopolitiques et opportunités sur les marchés mondiaux. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/13-06-2025 - Dollar en chute libre tensions géopolitiques et opportunités sur les marchés mondiaux.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/13-06-2025 - Dollar en chute libre tensions géopolitiques et opportunités sur les marchés mondiaux.mp3" length="5326098" type="audio/mpeg"/>
+      <pubDate>Fri, 13 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Dollar en chute libre tensions géopolitiques et opportunités sur les marchés mondiaux</itunes:summary>
+    </item>
+    <item>
+      <title>Crise au Moyen-Orient : l’effet domino sur les marchés et l'inflation</title>
+      <description>Épisode de Simon FinTech — Crise au Moyen-Orient : l’effet domino sur les marchés et l'inflation. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/16-06-2025 - Crise au Moyen-Orient : l’effet domino sur les marchés et l'inflation.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/16-06-2025 - Crise au Moyen-Orient : l’effet domino sur les marchés et l'inflation.mp3" length="4626853" type="audio/mpeg"/>
+      <pubDate>Mon, 16 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Crise au Moyen-Orient : l’effet domino sur les marchés et l'inflation</itunes:summary>
+    </item>
+    <item>
+      <title>Résilience des marchés face aux tensions géopolitiques la Fed sous les projecteurs</title>
+      <description>Épisode de Simon FinTech — Résilience des marchés face aux tensions géopolitiques la Fed sous les projecteurs. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/17-06-2025 - Résilience des marchés face aux tensions géopolitiques la Fed sous les projecteurs.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/17-06-2025 - Résilience des marchés face aux tensions géopolitiques la Fed sous les projecteurs.mp3" length="5296841" type="audio/mpeg"/>
+      <pubDate>Tue, 17 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Résilience des marchés face aux tensions géopolitiques la Fed sous les projecteurs</itunes:summary>
+    </item>
+    <item>
+      <title>GENIUS Act : Révolution des stablecoins ou opportunité pour les géants de la tech ?</title>
+      <description>Épisode de Simon FinTech — GENIUS Act : Révolution des stablecoins ou opportunité pour les géants de la tech ?. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/18-06-2025 - GENIUS Act : Révolution des stablecoins ou opportunité pour les géants de la tech ?.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/18-06-2025 - GENIUS Act : Révolution des stablecoins ou opportunité pour les géants de la tech ?.mp3" length="3952267" type="audio/mpeg"/>
+      <pubDate>Wed, 18 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>GENIUS Act : Révolution des stablecoins ou opportunité pour les géants de la tech ?</itunes:summary>
+    </item>
+    <item>
+      <title>Blackstone et la ruée vers le crédit européen : opportunités et perspectives pour les investisseurs</title>
+      <description>Épisode de Simon FinTech — Blackstone et la ruée vers le crédit européen : opportunités et perspectives pour les investisseurs. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/19-06-2025 - Blackstone et la ruée vers le crédit européen : opportunités et perspectives pour les investisseurs.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/19-06-2025 - Blackstone et la ruée vers le crédit européen : opportunités et perspectives pour les investisseurs.mp3" length="5692231" type="audio/mpeg"/>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Blackstone et la ruée vers le crédit européen : opportunités et perspectives pour les investisseurs</itunes:summary>
+    </item>
+    <item>
+      <title>Effondrement Boursier : Les Tensions Géopolitiques Redéfinissent Votre Stratégie d'Investissement</title>
+      <description>Épisode de Simon FinTech — Effondrement Boursier : Les Tensions Géopolitiques Redéfinissent Votre Stratégie d'Investissement. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/20-06-2025 - Effondrement Boursier : Les Tensions Géopolitiques Redéfinissent Votre Stratégie d'Investissement.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/20-06-2025 - Effondrement Boursier : Les Tensions Géopolitiques Redéfinissent Votre Stratégie d'Investissement.mp3" length="4944920" type="audio/mpeg"/>
+      <pubDate>Fri, 20 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Effondrement Boursier : Les Tensions Géopolitiques Redéfinissent Votre Stratégie d'Investissement</itunes:summary>
+    </item>
+    <item>
+      <title>L'e-euro est là : la BCE redéfinit l'avenir des paiements numériques en Europe</title>
+      <description>Épisode de Simon FinTech — L'e-euro est là : la BCE redéfinit l'avenir des paiements numériques en Europe. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/22-05-2025 - L'e-euro est là : la BCE redéfinit l'avenir des paiements numériques en Europe.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/22-05-2025 - L'e-euro est là : la BCE redéfinit l'avenir des paiements numériques en Europe.mp3" length="5173543" type="audio/mpeg"/>
+      <pubDate>Thu, 22 May 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>L'e-euro est là : la BCE redéfinit l'avenir des paiements numériques en Europe</itunes:summary>
+    </item>
+    <item>
+      <title>Wall Street sous algorithmes, la régulation en embuscade</title>
+      <description>Épisode de Simon FinTech — Wall Street sous algorithmes, la régulation en embuscade. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/23-05-2025 - Wall Street sous algorithmes, la régulation en embuscade.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/23-05-2025 - Wall Street sous algorithmes, la régulation en embuscade.mp3" length="4702503" type="audio/mpeg"/>
+      <pubDate>Fri, 23 May 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Wall Street sous algorithmes, la régulation en embuscade</itunes:summary>
+    </item>
+    <item>
+      <title>Robotaxis Tesla Débarquent à Austin : Révolution ou Risque Calculé ?</title>
+      <description>Épisode de Simon FinTech — Robotaxis Tesla Débarquent à Austin : Révolution ou Risque Calculé ?. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/23-06-2025 - Robotaxis Tesla Débarquent à Austin : Révolution ou Risque Calculé ?.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/23-06-2025 - Robotaxis Tesla Débarquent à Austin : Révolution ou Risque Calculé ?.mp3" length="4657364" type="audio/mpeg"/>
+      <pubDate>Mon, 23 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Robotaxis Tesla Débarquent à Austin : Révolution ou Risque Calculé ?</itunes:summary>
+    </item>
+    <item>
+      <title>Tesla Model Y Robotaxis : Révolution Urbaine ou Défi Réglementaire ?</title>
+      <description>Épisode de Simon FinTech — Tesla Model Y Robotaxis : Révolution Urbaine ou Défi Réglementaire ?. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/24-06-2025 - Tesla Model Y Robotaxis : Révolution Urbaine ou Défi Réglementaire ?.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/24-06-2025 - Tesla Model Y Robotaxis : Révolution Urbaine ou Défi Réglementaire ?.mp3" length="5383359" type="audio/mpeg"/>
+      <pubDate>Tue, 24 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Tesla Model Y Robotaxis : Révolution Urbaine ou Défi Réglementaire ?</itunes:summary>
+    </item>
+    <item>
+      <title>Réguler sans freiner, le grand pari des cryptos US</title>
+      <description>Épisode de Simon FinTech — Réguler sans freiner, le grand pari des cryptos US. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/25-05-2025 - Réguler sans freiner, le grand pari des cryptos US.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/25-05-2025 - Réguler sans freiner, le grand pari des cryptos US.mp3" length="2" type="audio/mpeg"/>
+      <pubDate>Sun, 25 May 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Réguler sans freiner, le grand pari des cryptos US</itunes:summary>
+    </item>
+    <item>
+      <title>Xero et Melio révolutionnent la FinTech B2B avec un rachat à 2,5 milliards</title>
+      <description>Épisode de Simon FinTech — Xero et Melio révolutionnent la FinTech B2B avec un rachat à 2,5 milliards. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/25-06-2025 - Xero et Melio révolutionnent la FinTech B2B avec un rachat à 2,5 milliards.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/25-06-2025 - Xero et Melio révolutionnent la FinTech B2B avec un rachat à 2,5 milliards.mp3" length="5173125" type="audio/mpeg"/>
+      <pubDate>Wed, 25 Jun 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Xero et Melio révolutionnent la FinTech B2B avec un rachat à 2,5 milliards</itunes:summary>
+    </item>
+    <item>
+      <title>Actu du 20/05/2025</title>
+      <description>Épisode de Simon FinTech — Actu du 20/05/2025. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/podcast_20-05-2025.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/podcast_20-05-2025.mp3" length="4870523" type="audio/mpeg"/>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Actu du 20/05/2025</itunes:summary>
+    </item>
+    <item>
+      <title>Actu du 21/05/2025</title>
+      <description>Épisode de Simon FinTech — Actu du 21/05/2025. Finance et tech décryptées.</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/podcast_20250521.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/podcast_20250521.mp3" length="20107" type="audio/mpeg"/>
+      <pubDate>Wed, 21 May 2025 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Actu du 21/05/2025</itunes:summary>
+    </item>
+  </channel>
+</rss>
