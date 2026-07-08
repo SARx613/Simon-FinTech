@@ -1,40 +1,83 @@
-name: Génération quotidienne podcast
+name: 🎙️ Podcast quotidien
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # Tous les jours à 6h UTC
-  workflow_dispatch:      # Lancement manuel
+    # 8h heure de Paris toute l'année : 6h UTC (été, CEST) et 7h UTC (hiver, CET).
+    # Les deux crons se déclenchent ; le job check-hour ne laisse passer que
+    # celui qui correspond réellement à 8h à Paris.
+    - cron: '0 6 * * *'
+    - cron: '0 7 * * *'
+  workflow_dispatch:   # bouton "Run workflow" pour lancer à la main
+
+# Autorise le workflow à commit/push les nouveaux épisodes
+permissions:
+  contents: write
+
+# Empêche deux exécutions simultanées
+concurrency:
+  group: podcast-daily
+  cancel-in-progress: false
 
 jobs:
+  check-hour:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.paris.outputs.go }}
+    steps:
+      - name: Est-il 8h à Paris ?
+        id: paris
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(TZ=Europe/Paris date +%H)" = "08" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            echo "🟡 Pas 8h à Paris — run ignoré (l'autre cron s'en chargera)."
+          fi
+
   build:
+    needs: check-hour
+    if: needs.check-hour.outputs.go == 'true'
     runs-on: ubuntu-latest
 
     env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      LLM_PROVIDER: groq
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      # Voix : "edge" (gratuit, sans clé) ou "hf" (ta voix clonée via HF Space).
+      # Pour basculer sur ta voix : Settings → Variables → TTS_ENGINE=hf
+      # + secrets HF_TOKEN et variable HF_SPACE_ID.
+      TTS_ENGINE: ${{ vars.TTS_ENGINE || 'edge' }}
+      EDGE_VOICE: ${{ vars.EDGE_VOICE || 'fr-FR-HenriNeural' }}
+      HF_SPACE_ID: ${{ vars.HF_SPACE_ID }}
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
     steps:
       - name: Checkout du dépôt
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Installer Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
-      - name: Générer l'audio
+      - name: Générer l'épisode du jour
         run: python generate_podcast.py
 
       - name: Mettre à jour le flux RSS
         run: python update_rss.py
 
-      - name: Commit et push
+      - name: Commit et push du nouvel épisode
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "🆕 Nouvel épisode automatique"
-          git push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add podcasts/*.mp3 scripts/*.txt rss.xml script_hier.txt script_today.txt
+          if git diff --staged --quiet; then
+            echo "🟡 Aucun nouvel épisode aujourd'hui — rien à publier."
+          else
+            git commit -m "🎙️ Épisode du $(date -u +'%d-%m-%Y')"
+            git push
+            echo "✅ Épisode publié."
+          fi

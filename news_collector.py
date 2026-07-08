@@ -10,16 +10,39 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-# Flux RSS Google News en français (Finance + Tech)
+# Sources premium finance & tech (anglophones : les plus en avance et réactives).
+# Bloomberg/Reuters/FT donnent surtout titres + tendances (paywall) ; CNBC/Yahoo/
+# MarketWatch/TechCrunch offrent en général le texte complet. Le script étant en
+# français, le LLM traduit et reformule — les sources anglaises ne posent pas de souci.
 RSS_FEEDS = {
-    "business": "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=fr&gl=FR&ceid=FR:fr",
-    "technology": "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=fr&gl=FR&ceid=FR:fr",
+    # Texte complet accessible — on les tente en premier (extraction fiable)
+    "cnbc_finance": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",
+    "cnbc_tech": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
+    "yahoo_finance": "https://finance.yahoo.com/news/rssindex",
+    "marketwatch": "https://feeds.content.dowjones.io/public/rss/mw_topstories",
+    "techcrunch": "https://techcrunch.com/feed/",
+    # Écho francophone (pour ancrer certains sujets côté Europe/France)
+    "latribune": "https://www.latribune.fr/rss/rubriques/entreprises-finance.html",
+    "lesechos_finance": "https://services.lesechos.fr/rss/les-echos-finance-marches.xml",
+    # Références premium paywallées — extraction full-text rarement possible,
+    # mais leurs titres + snippets restent une excellente matière (fin de liste)
+    "bloomberg_markets": "https://feeds.bloomberg.com/markets/news.rss",
+    "bloomberg_tech": "https://feeds.bloomberg.com/technology/news.rss",
+    "ft_home": "https://www.ft.com/rss/home",
 }
 
-# Sources supplémentaires (optionnel)
-EXTRA_FEEDS = {
-    "techcrunch": "https://techcrunch.com/feed/",
+# Filet de sécurité : Google News si les sources premium ne donnent pas assez.
+FALLBACK_FEEDS = {
+    "google_business": "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=fr&gl=FR&ceid=FR:fr",
+    "google_tech": "https://news.google.com/rss/headlines/section/topic/TECHNOLOGY?hl=fr&gl=FR&ceid=FR:fr",
 }
+
+# Conservé pour compatibilité (ancien nom)
+EXTRA_FEEDS = FALLBACK_FEEDS
+
+# Fenêtre de fraîcheur : on ne garde que les articles publiés dans les dernières
+# MAX_AGE_HOURS heures (24 par défaut → actu d'aujourd'hui / hier soir).
+MAX_AGE_HOURS = 24
 
 
 def _resolve_google_news_url(google_url: str) -> str:
@@ -120,92 +143,134 @@ def _extract_article_text(url: str) -> Optional[dict]:
     return None
 
 
-def get_daily_articles(max_articles: int = 5, include_extra: bool = False) -> list[dict]:
-    """
-    Récupère les articles d'actualité du jour en finance et tech.
-
-    Args:
-        max_articles: Nombre maximum d'articles à retourner (défaut: 5)
-        include_extra: Inclure les sources supplémentaires (TechCrunch, etc.)
-
-    Returns:
-        Liste de dictionnaires avec les clés: title, text, url, source
-    """
-    feeds = dict(RSS_FEEDS)
-    if include_extra:
-        feeds.update(EXTRA_FEEDS)
-
-    all_entries = []
-
+def _collect_entries(feeds: dict) -> list[dict]:
+    """Parse une série de flux RSS et retourne les entrées récentes (< 48h)."""
+    entries = []
     for feed_name, feed_url in feeds.items():
         logger.info(f"Parsing flux RSS : {feed_name}")
         try:
             feed = feedparser.parse(feed_url)
-
             if feed.bozo and not feed.entries:
                 logger.warning(f"Erreur parsing {feed_name}: {feed.bozo_exception}")
                 continue
 
             for entry in feed.entries:
-                # Vérifier que l'article est récent (dernières 48h)
-                published = entry.get("published_parsed")
+                # Certains flux exposent published_parsed, d'autres updated_parsed.
+                published = entry.get("published_parsed") or entry.get("updated_parsed")
                 if published:
                     pub_date = datetime.datetime(*published[:6])
-                    age = datetime.datetime.now() - pub_date
-                    if age.days > 2:
+                    age_hours = (datetime.datetime.utcnow() - pub_date).total_seconds() / 3600
+                    if age_hours > MAX_AGE_HOURS:
                         continue
 
-                all_entries.append({
+                entries.append({
                     "title": entry.get("title", ""),
                     "link": entry.get("link", ""),
                     "summary": entry.get("summary", ""),
                     "feed": feed_name,
                 })
-
         except Exception as e:
             logger.error(f"Erreur lors du parsing de {feed_name}: {e}")
             continue
+    return entries
 
-    logger.info(f"Total d'entrées RSS collectées : {len(all_entries)}")
 
-    # Dédupliquer par titre (Google News peut avoir des doublons)
-    seen_titles = set()
-    unique_entries = []
-    for entry in all_entries:
-        title_lower = entry["title"].lower().strip()
-        if title_lower not in seen_titles:
-            seen_titles.add(title_lower)
-            unique_entries.append(entry)
+def _dedupe(entries: list[dict]) -> list[dict]:
+    """Déduplique les entrées par titre."""
+    seen, unique = set(), []
+    for entry in entries:
+        key = entry["title"].lower().strip()
+        if key and key not in seen:
+            seen.add(key)
+            unique.append(entry)
+    return unique
 
-    # Extraire le texte complet de chaque article
-    articles = []
-    for entry in unique_entries:
-        if len(articles) >= max_articles:
-            break
 
-        url = entry["link"]
+def _interleave_by_feed(entries: list[dict]) -> list[dict]:
+    """
+    Panache les entrées en alternant les sources (1 CNBC, 1 Yahoo, 1 TechCrunch…)
+    pour que l'épisode couvre plusieurs médias au lieu de vider le premier flux.
+    L'ordre des flux dans RSS_FEEDS est préservé à chaque tour.
+    """
+    by_feed: dict[str, list[dict]] = {}
+    for entry in entries:
+        by_feed.setdefault(entry["feed"], []).append(entry)
 
-        # Résoudre les redirections Google News
-        if "news.google.com" in url:
-            url = _resolve_google_news_url(url)
+    interleaved = []
+    while any(by_feed.values()):
+        for feed_entries in by_feed.values():
+            if feed_entries:
+                interleaved.append(feed_entries.pop(0))
+    return interleaved
 
-        logger.info(f"Extraction de l'article : {entry['title'][:60]}...")
-        article = _extract_article_text(url)
 
-        if article:
-            articles.append(article)
-        else:
-            # Fallback : utiliser le snippet RSS si l'extraction échoue
-            if entry.get("summary") and len(entry["summary"]) > 100:
-                logger.info(f"Fallback sur le snippet RSS pour : {entry['title'][:60]}")
-                articles.append({
+def get_daily_articles(max_articles: int = 6, include_extra: bool = True) -> list[dict]:
+    """
+    Récupère les meilleurs articles finance & tech du jour, avec texte complet.
+
+    Stratégie : on privilégie les flux spécialisés (RSS_FEEDS). Si on n'a pas
+    assez d'articles exploitables, on complète avec Google News (FALLBACK_FEEDS).
+    On préfère les articles au texte complet (>= 200 caractères) ; les snippets
+    RSS courts ne sont utilisés qu'en dernier recours.
+
+    Args:
+        max_articles: Nombre d'articles visés (défaut: 6, pour un épisode 6-7 min).
+        include_extra: Autoriser le complément Google News si nécessaire.
+
+    Returns:
+        Liste de dicts avec les clés: title, text, url, source.
+    """
+    # 1) Sources spécialisées d'abord, panachées pour la diversité des médias
+    entries = _interleave_by_feed(_dedupe(_collect_entries(RSS_FEEDS)))
+    logger.info(f"Entrées (sources spécialisées) : {len(entries)}")
+
+    # Budget de tentatives d'extraction : évite de perdre des minutes sur des
+    # paywalls successifs (Bloomberg/FT). Au-delà, on complète avec les snippets.
+    attempts_left = max_articles * 4
+
+    def _extract_from(entries_list, articles):
+        """Extrait le texte des entrées, ajoute aux articles jusqu'à max_articles."""
+        nonlocal attempts_left
+        snippets_fallback = []
+        for entry in entries_list:
+            if len(articles) >= max_articles or attempts_left <= 0:
+                break
+            url = entry["link"]
+            if "news.google.com" in url:
+                url = _resolve_google_news_url(url)
+
+            attempts_left -= 1
+            logger.info(f"Extraction : {entry['title'][:60]}...")
+            article = _extract_article_text(url)
+            if article and len(article["text"]) >= 200:
+                articles.append(article)
+            elif entry.get("summary") and len(_strip_html(entry["summary"])) > 100:
+                # On garde le snippet de côté : utilisé seulement si on manque d'articles
+                snippets_fallback.append({
                     "title": entry["title"],
                     "text": _strip_html(entry["summary"]),
                     "url": url,
                     "source": "RSS snippet",
                 })
+        return snippets_fallback
 
-    logger.info(f"Articles extraits avec succès : {len(articles)}/{max_articles}")
+    articles = []
+    snippets = _extract_from(entries, articles)
+
+    # 2) Complément Google News si pas assez d'articles full-text
+    if len(articles) < max_articles and include_extra:
+        logger.info("Pas assez d'articles spécialisés — complément via Google News.")
+        extra_entries = _dedupe(_collect_entries(FALLBACK_FEEDS))
+        snippets += _extract_from(extra_entries, articles)
+
+    # 3) En dernier recours, compléter avec les snippets récoltés
+    for snip in snippets:
+        if len(articles) >= max_articles:
+            break
+        logger.info(f"Complément via snippet RSS : {snip['title'][:60]}")
+        articles.append(snip)
+
+    logger.info(f"Articles retenus : {len(articles)}/{max_articles}")
     return articles
 
 

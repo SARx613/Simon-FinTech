@@ -1,4 +1,20 @@
 .env
 __pycache__/
 *.pyc
-audio/*.mp3
+
+# Clés / secrets — ne jamais committer
+git_ssh
+git_ssh.pub
+*.pem
+
+# Échantillons de voix bruts (dépôt public : risque de clonage par des tiers)
+voice_reference.wav
+voice_reference.m4a
+
+# Dossier de travail local (contient un autre dépôt git)
+Autres/
+
+# Fichiers temporaires
+temp_audio/
+test_podcast.mp3
+.DS_Store
