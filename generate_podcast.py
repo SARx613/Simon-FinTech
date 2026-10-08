@@ -20,7 +20,7 @@ import logging
 from dotenv import load_dotenv
 
 from news_collector import get_daily_articles
-from script_generator import generate_script, _get_llm_client
+from script_generator import generate_script, generate_text
 from voice_synth import generate_podcast as synthesize_voice
 
 load_dotenv()
@@ -48,7 +48,7 @@ def _read_previous_script() -> str:
 
 
 def _generate_title(script: str) -> str:
-    """Génère un titre court et accrocheur via le même LLM gratuit (Groq)."""
+    """Génère un titre court et accrocheur via le LLM configuré (Claude, Groq, OpenAI)."""
     # On s'appuie sur le début du script (après l'intro fixe) pour le contexte.
     paragraphs = [p for p in script.split("\n") if p.strip()]
     context = paragraphs[0][:600] if paragraphs else script[:600]
@@ -62,14 +62,7 @@ def _generate_title(script: str) -> str:
     )
 
     try:
-        client, model = _get_llm_client()
-        response = client.chat.completions.create(
-            model=model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.8,
-            max_tokens=40,
-        )
-        title = response.choices[0].message.content.strip()
+        title = generate_text(prompt, max_tokens=40, temperature=0.8)
         # Nettoyage : retirer guillemets et retours à la ligne parasites
         title = title.strip('"').strip("«»").replace("\n", " ").strip()
         return title

@@ -15,9 +15,14 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 # Configuration du provider LLM
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "groq")  # "groq", "gemini", "ollama", "openai"
+# "claude" (recommandé), "groq", "openai", "ollama"
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "claude")
 
 LLM_CONFIGS = {
+    "claude": {
+        "api_key_env": "ANTHROPIC_API_KEY",
+        "model": os.getenv("ANTHROPIC_MODEL", "claude-3-5-sonnet-20241022"),
+    },
     "groq": {
         "base_url": "https://api.groq.com/openai/v1",
         "api_key_env": "GROQ_API_KEY",
@@ -79,27 +84,71 @@ def _format_articles_for_prompt(articles: list[dict]) -> str:
     return "\n".join(parts)
 
 
-def _get_llm_client() -> tuple[OpenAI, str]:
-    """Initialise et retourne le client LLM selon la configuration."""
-    config = LLM_CONFIGS.get(LLM_PROVIDER)
+def _get_openai_compatible_client(provider: str) -> tuple[OpenAI, str]:
+    """Initialise et retourne le client pour les providers compatibles OpenAI (Groq, OpenAI, Ollama)."""
+    config = LLM_CONFIGS.get(provider)
     if not config:
-        raise ValueError(f"Provider LLM inconnu : {LLM_PROVIDER}. Choix : {list(LLM_CONFIGS.keys())}")
+        raise ValueError(f"Provider LLM inconnu : {provider}. Choix : {list(LLM_CONFIGS.keys())}")
 
     api_key = "ollama"  # Valeur par défaut pour Ollama
-    if config["api_key_env"]:
+    if config.get("api_key_env"):
         api_key = os.getenv(config["api_key_env"])
         if not api_key:
             raise ValueError(
                 f"Clé API manquante : {config['api_key_env']}. "
-                f"Ajoute-la dans ton fichier .env"
+                f"Ajoute-la dans ton fichier .env ou les secrets GitHub."
             )
 
     client = OpenAI(
         api_key=api_key,
-        base_url=config["base_url"],
+        base_url=config.get("base_url"),
     )
 
     return client, config["model"]
+
+
+def call_llm(messages: list[dict], max_tokens: int = 3500, temperature: float = 0.7) -> str:
+    """Appelle le provider LLM actif (Claude Anthropic ou OpenAI/Groq)."""
+    provider = os.getenv("LLM_PROVIDER", LLM_PROVIDER).lower()
+
+    if provider in ("claude", "anthropic"):
+        try:
+            from anthropic import Anthropic
+        except ImportError:
+            raise ImportError("anthropic n'est pas installé. Installe-le avec : pip install anthropic")
+
+        api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "Clé API manquante : ANTHROPIC_API_KEY. "
+                "Renseigne-la dans ton fichier .env ou dans les Secrets GitHub."
+            )
+
+        model = os.getenv("ANTHROPIC_MODEL", LLM_CONFIGS["claude"]["model"])
+        client = Anthropic(api_key=api_key)
+
+        response = client.messages.create(
+            model=model,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            messages=messages,
+        )
+        return response.content[0].text.strip()
+
+    else:
+        client, model = _get_openai_compatible_client(provider)
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        return response.choices[0].message.content.strip()
+
+
+def generate_text(prompt: str, max_tokens: int = 3500, temperature: float = 0.7) -> str:
+    """Génère du texte pour un prompt simple."""
+    return call_llm([{"role": "user", "content": prompt}], max_tokens=max_tokens, temperature=temperature)
 
 
 def generate_script(articles: list[dict], date: datetime.date = None) -> str:
@@ -139,18 +188,11 @@ def generate_script(articles: list[dict], date: datetime.date = None) -> str:
     )
 
     # Appel au LLM
-    logger.info(f"Génération du script avec {LLM_PROVIDER} (modèle: {LLM_CONFIGS[LLM_PROVIDER]['model']})")
-
-    client, model = _get_llm_client()
+    provider = os.getenv("LLM_PROVIDER", LLM_PROVIDER).lower()
+    logger.info(f"Génération du script avec provider: {provider}")
 
     messages = [{"role": "user", "content": prompt}]
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        temperature=0.7,
-        max_tokens=3500,  # marge confortable pour un script de ~1400 mots
-    )
-    script = response.choices[0].message.content.strip()
+    script = call_llm(messages, max_tokens=3500, temperature=0.7)
     word_count = len(script.split())
     logger.info(f"Script généré : {word_count} mots")
 
@@ -170,10 +212,7 @@ def generate_script(articles: list[dict], date: datetime.date = None) -> str:
                 f"Garde la même intro et la même conclusion. Renvoie uniquement le script final."
             ),
         })
-        retry = client.chat.completions.create(
-            model=model, messages=messages, temperature=0.7, max_tokens=3500,
-        )
-        retry_script = retry.choices[0].message.content.strip()
+        retry_script = call_llm(messages, max_tokens=3500, temperature=0.7)
         retry_words = len(retry_script.split())
         logger.info(f"Script étoffé : {retry_words} mots")
         # On garde la version la plus longue des deux

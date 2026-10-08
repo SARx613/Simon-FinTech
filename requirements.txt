@@ -1,6 +1,7 @@
-# Simon FinTech — dépendances (100 % gratuit)
+# Simon FinTech — Dépendances
 
-# LLM (Groq / OpenAI-compatible)
+# LLM (Claude Anthropic, Groq, OpenAI)
+anthropic>=0.30.0
 openai>=1.14.3
 python-dotenv>=1.0.1
 
@@ -11,9 +12,10 @@ newspaper4k>=0.9.3
 trafilatura>=1.8.0
 lxml[html_clean]>=5.2.0
 
-# Synthèse vocale gratuite
+# Synthèse vocale (ElevenLabs, Edge-TTS, HuggingFace)
+elevenlabs>=1.0.0
+pydub>=0.25.1
 edge-tts>=6.1.0
-# Client API du Space Hugging Face (voix clonée, TTS_ENGINE=hf)
 gradio-client>=1.0
 
 # Flux RSS
