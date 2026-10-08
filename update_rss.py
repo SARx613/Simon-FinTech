@@ -103,17 +103,28 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
         title = _title_from_filename(filename, date_obj)
         url = f"{SITE_BASE}/podcasts/{filename}"
 
+        # Description enrichie à partir du script texte s'il existe
+        stem = os.path.splitext(filename)[0]
+        script_path = os.path.join("scripts", stem + ".txt")
+        description_text = f"Épisode de Simon FinTech — {title}. Finance et tech décryptées."
+        if os.path.exists(script_path):
+            try:
+                with open(script_path, "r", encoding="utf-8") as sf:
+                    content = sf.read().strip()
+                    if content:
+                        description_text = content[:1500] + ("…" if len(content) > 1500 else "")
+            except Exception:
+                pass
+
         episode = fg.add_entry()
         episode.id(url)
         episode.title(title)
-        episode.description(
-            f"Épisode de Simon FinTech — {title}. Finance et tech décryptées."
-        )
+        episode.description(description_text)
         episode.enclosure(url=url, length=str(file_size), type="audio/mpeg")
         episode.pubDate(date_obj)
         # Balises iTunes au niveau de l'épisode
         episode.podcast.itunes_author(PODCAST_AUTHOR)
-        episode.podcast.itunes_summary(title)
+        episode.podcast.itunes_summary(description_text[:250])
         episode.podcast.itunes_explicit(PODCAST_EXPLICIT)
         episodes_added += 1
 
