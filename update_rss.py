@@ -11,6 +11,7 @@ from feedgen.feed import FeedGenerator
 import datetime
 import os
 import re
+from urllib.parse import quote
 
 # ─── Métadonnées du podcast (à personnaliser au besoin) ───
 SITE_BASE = "https://sarx613.github.io/Simon-FinTech"
@@ -101,7 +102,8 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
         file_size = os.path.getsize(filepath)
 
         title = _title_from_filename(filename, date_obj)
-        url = f"{SITE_BASE}/podcasts/{filename}"
+        url = f"{SITE_BASE}/podcasts/{filename}"          # guid : inchangé, pour ne pas recréer les anciens épisodes
+        audio_url = f"{SITE_BASE}/podcasts/{quote(filename)}"  # URL valide (espaces, accents, « : »)
 
         # Description enrichie à partir du script texte s'il existe
         stem = os.path.splitext(filename)[0]
@@ -120,7 +122,7 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
         episode.id(url)
         episode.title(title)
         episode.description(description_text)
-        episode.enclosure(url=url, length=str(file_size), type="audio/mpeg")
+        episode.enclosure(url=audio_url, length=str(file_size), type="audio/mpeg")
         episode.pubDate(date_obj)
         # Balises iTunes au niveau de l'épisode
         episode.podcast.itunes_author(PODCAST_AUTHOR)
