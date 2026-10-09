@@ -1,8 +1,5 @@
 # Simon FinTech — Dépendances
 
-# LLM (Claude Anthropic, Groq, OpenAI)
-anthropic>=0.30.0
-openai>=1.14.3
 python-dotenv>=1.0.1
 
 # Collecte d'actualités
