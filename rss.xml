@@ -13,7 +13,7 @@
       <link>https://sarx613.github.io/Simon-FinTech/rss.xml</link>
     </image>
     <language>fr</language>
-    <lastBuildDate>Fri, 09 Oct 2026 16:35:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 09 Oct 2026 17:03:59 +0000</lastBuildDate>
     <itunes:author>Simon</itunes:author>
     <itunes:category text="Business">
       <itunes:category text="Investing"/>
@@ -71,6 +71,21 @@ Sur le plan monétaire européen, un membre influent de la BCE, Boris Vujcic, a 
       <itunes:summary>Salut c’est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes. Prêt à découvrir comment la finance, la tech et la diplomatie s’enchevêtrent aujourd’hui ? On démarre tout de suite.
 
 Vous avez vu ? Meta es</itunes:summary>
+    </item>
+    <item>
+      <title>SpaceX fait trembler les télécoms, Muse défie vos habitudes d'achat</title>
+      <description>Verizon, T-Mobile, AT&amp;T : trois géants des télécoms balayés en une seule séance par une annonce signée Elon Musk. Comment on en arrive là ? Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes.
+
+Allons-y direct, parce que ce vendredi, Wall Street a vécu un vrai petit séisme. SpaceX a annoncé un accord pour racheter un portefeuille national de fréquences à Grain Management : jusqu'à 14 mégahertz de spectre apparié dans la bande des 800 MHz. Le but, c'est de pousser Starlink vers le mobile. Et la sanction a été immédiate. Verizon a lâché environ 7 %, et la journée est partie pour être sa pire depuis 2002. T-Mobile a perdu 12 %, AT&amp;T environ 10 %. Pendant ce temps, l'action SpaceX, elle, grimpe d'à peu près 1 %. Pas mal comme rapport de force, non ?
+
+Ce que je trouve fascinant, c'est que le marché n'attend même pas de voir le produit. Il suffit que Musk ait l'air de vouloir venir sur ton terrain pour que ta valorisation prenne un coup de marteau. Le patron de la FCC, Brendan Carr, dont l'agence devra valider le deal, dit que la concurrence sur le spectre est une très bonne nouvelle pour les consommateurs, et que l'agence n'a pas à choisir des gagnants et des perdants. Il annonce même plus de cent milliards de dollars de spectre mis sur le marché dans les deux ans. Moi je pense que les opérateurs historiques ont raison d'avoir peur : quand un nouvel acteur arrive avec ses propres satellites, ton oligopole confortable devient…</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/09-10-2026 - SpaceX fait trembler les télécoms, Muse défie vos habitudes d'achat.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/09-10-2026%20-%20SpaceX%20fait%20trembler%20les%20t%C3%A9l%C3%A9coms%2C%20Muse%20d%C3%A9fie%20vos%20habitudes%20d%27achat.mp3" length="6437869" type="audio/mpeg"/>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Verizon, T-Mobile, AT&amp;T : trois géants des télécoms balayés en une seule séance par une annonce signée Elon Musk. Comment on en arrive là ? Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes.
+</itunes:summary>
     </item>
     <item>
       <title>Walmart Réinvente la Carte de Crédit et Déclare la Guerre aux Banques Traditionnelles</title>
