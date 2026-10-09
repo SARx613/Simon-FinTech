@@ -4,12 +4,14 @@ Tu es Claude. Chaque matin, tu produis et publies l'épisode du jour, sans clé 
 
 ## Étapes
 
-1. `pip install -r requirements.txt` (si nécessaire), puis `python fetch_news.py` → écrit `news_today.md`.
-   Si la collecte échoue ou donne peu de matière, complète avec WebSearch/WebFetch (actus finance & tech < 24 h).
+1. Environnement Python : dans le cloud, `pip install` direct échoue (setuptools du système cassé). Utilise toujours un venv :
+   `python -m venv /tmp/v && /tmp/v/bin/pip install -q -r requirements.txt`, puis lance TOUS les scripts avec `/tmp/v/bin/python`.
+   Collecte : `timeout 180 /tmp/v/bin/python fetch_news.py` → écrit `news_today.md`.
+   Si la collecte échoue, expire ou donne peu de matière (< 4 articles exploitables), complète avec WebSearch/WebFetch (actus finance & tech < 24 h).
 2. Lis `news_today.md` et `script_hier.txt` (évite de répéter les sujets d'hier).
 3. Rédige le script selon le brief ci-dessous et écris-le dans `script_today.txt`.
 4. Choisis un titre (max 12 mots, sans date, sans guillemets).
-5. `python publish_episode.py --title "<titre>" --push`
+5. `/tmp/v/bin/python publish_episode.py --title "<titre>" --push` (en local : `python`)
    Génère la voix ElevenLabs, met à jour `rss.xml`, commit et push → Spotify lit le flux.
 6. Si une étape échoue, ne publie rien d'à moitié fini : explique l'erreur dans ton compte rendu.
 
