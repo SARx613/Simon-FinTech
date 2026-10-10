@@ -13,7 +13,7 @@
       <link>https://sarx613.github.io/Simon-FinTech/rss.xml</link>
     </image>
     <language>fr</language>
-    <lastBuildDate>Fri, 09 Oct 2026 17:03:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 10 Oct 2026 06:26:32 +0000</lastBuildDate>
     <itunes:author>Simon</itunes:author>
     <itunes:category text="Business">
       <itunes:category text="Investing"/>
@@ -100,6 +100,20 @@ Direction l’Europe, et …</description>
       <itunes:author>Simon</itunes:author>
       <itunes:explicit>no</itunes:explicit>
       <itunes:summary>Vous vous êtes déjà demandé comment un géant comme Walmart redessine les contours de ses services financiers pour mieux maîtriser sa relation client ? Plongeons ensemble dans l’actu du jour. Salut, c’est Simon, bienvenue dans le podcast qui rend la f</itunes:summary>
+    </item>
+    <item>
+      <title>OpenAI vacille, SoftBank voit à 100 milliards, les stablecoins attendent</title>
+      <description>Cinquante milliards, soixante-dix milliards, soixante-huit milliards : quand les chiffres d'OpenAI se contredisent, c'est toute la Bourse qui tousse. Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes.
+
+On commence par l'histoire qui a secoué les marchés cette semaine, parce qu'elle dit quelque chose de très profond sur l'état d'esprit des investisseurs. Jeudi, un article affirme que le chiffre d'affaires annualisé d'OpenAI tournerait autour de 50 milliards de dollars, alors que des chiffres bien plus élevés circulaient depuis des semaines, jusqu'à 68 voire 70 milliards. Réaction immédiate : Nvidia perd environ 3 %, AMD près de 4 %, Micron presque 5 %, Oracle près de 6 %, et CoreWeave presque 8 %. Le Nasdaq, lui, lâche plus de 1 % en une séance, du jamais vu depuis la mi-août. Pourquoi une telle panique ? Parce que toute la machine à construire des data centers repose sur une promesse : OpenAI va grossir très, très vite, et pouvoir payer l'addition.
+
+Et vendredi, rebond. OpenAI explique à ses investisseurs qu'elle vise un chiffre d'affaires annualisé d'au moins 70 milliards de dollars d'ici la fin de l'année. Nvidia et Micron remontent, le Nasdaq repart d'environ 0,6 % en début de séance. Moi, ce que je retiens, c'est la nervosité. Un seul article, et des centaines de milliards de capitalisation valsent. Pour info, Nvidia avait clôturé mardi sur un record à 230 dollars et quelques, soit environ 5 770 milliards de dolla…</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/10-10-2026 - OpenAI vacille, SoftBank voit à 100 milliards, les stablecoins attendent.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/10-10-2026%20-%20OpenAI%20vacille%2C%20SoftBank%20voit%20%C3%A0%20100%20milliards%2C%20les%20stablecoins%20attendent.mp3" length="6636399" type="audio/mpeg"/>
+      <pubDate>Sat, 10 Oct 2026 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Cinquante milliards, soixante-dix milliards, soixante-huit milliards : quand les chiffres d'OpenAI se contredisent, c'est toute la Bourse qui tousse. Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passi</itunes:summary>
     </item>
     <item>
       <title>La Crypto : Nouveau Refuge Numérique Dépassant l'Or et les Actions Mondiales</title>
