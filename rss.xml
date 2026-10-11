@@ -13,7 +13,7 @@
       <link>https://sarx613.github.io/Simon-FinTech/rss.xml</link>
     </image>
     <language>fr</language>
-    <lastBuildDate>Sat, 10 Oct 2026 06:26:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 Oct 2026 06:28:25 +0000</lastBuildDate>
     <itunes:author>Simon</itunes:author>
     <itunes:category text="Business">
       <itunes:category text="Investing"/>
@@ -128,6 +128,24 @@ Et justement, ce n’est pas un hasard si la Société Générale a décidé de 
       <itunes:author>Simon</itunes:author>
       <itunes:explicit>no</itunes:explicit>
       <itunes:summary>Salut c’est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes. Vous êtes prêts ? Alors, dites-moi : est-ce que les crypto peuvent enfin jouer un rôle stable dans vos portefeuilles, ou est-ce encore trop </itunes:summary>
+    </item>
+    <item>
+      <title>Records en Bourse, bitcoin en berne  l'IA fait trembler les marchés</title>
+      <description>Le S&amp;P 500 vient de dépasser les 7 800 points pour la première fois de son histoire, et pourtant tout le monde a l'air de transpirer. Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes.
+
+Alors oui, vous avez bien entendu : record historique. Sur la semaine, l'indice américain gagne environ 1,2 % et passe au-dessus de 7 800. Le Nasdaq, lui, grimpe d'environ 0,6 % et enchaîne une quatrième semaine de hausse d'affilée. Sur le papier, c'est la fête. Dans la réalité, c'est un grand huit. Jeudi, la tech a pris cher, vendredi elle a rebondi, et toute la semaine, une même question a flotté au-dessus des salles de marché : et si l'intelligence artificielle coûtait plus cher qu'elle ne rapporte ?
+
+Parce que voilà le vrai sujet. Des analyses circulent sur les engagements financiers des grands laboratoires d'IA, avec des obligations qui représenteraient environ cent fois leur chiffre d'affaires. Cent fois. Et on parle d'environ 489 milliards de dollars d'emprunts liés à l'IA dans la tech. Moi, je le dis franchement : ce n'est pas la technologie qui est en cause, elle est bluffante. Ce qui fait suer les investisseurs, c'est la facture. Construire des data centers, ça se paie avant que ça rapporte. Et quand les clients doivent eux-mêmes emprunter pour payer, le château de cartes devient une vraie question de crédit, pas de science-fiction.
+
+Et c'est là que ça devient intéressant, parce que cette histoire déborde largement de la tech…</description>
+      <guid isPermaLink="false">https://sarx613.github.io/Simon-FinTech/podcasts/11-10-2026 - Records en Bourse, bitcoin en berne  l'IA fait trembler les marchés.mp3</guid>
+      <enclosure url="https://sarx613.github.io/Simon-FinTech/podcasts/11-10-2026%20-%20Records%20en%20Bourse%2C%20bitcoin%20en%20berne%20%20l%27IA%20fait%20trembler%20les%20march%C3%A9s.mp3" length="6684883" type="audio/mpeg"/>
+      <pubDate>Sun, 11 Oct 2026 00:00:00 +0000</pubDate>
+      <itunes:author>Simon</itunes:author>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:summary>Le S&amp;P 500 vient de dépasser les 7 800 points pour la première fois de son histoire, et pourtant tout le monde a l'air de transpirer. Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes.
+
+Alors</itunes:summary>
     </item>
     <item>
       <title>Tech &amp; Finance : Simplifier l'Inaccessible pour une Aventure Passionnante</title>
