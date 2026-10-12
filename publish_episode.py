@@ -5,13 +5,14 @@ Prend le script rédigé par Claude, le passe à ElevenLabs, range le MP3 et le
 texte, met à jour rss.xml, puis commit/push si --push est demandé.
 
 Lancement :
-    python publish_episode.py --title "Titre de l'épisode" [--script script_today.txt] [--push]
+    python publish_episode.py --title "Titre de l'épisode" [--script script_today.txt] [--summary resume_today.txt] [--push]
 """
 
 import argparse
 import datetime
 import logging
 import os
+import re
 import subprocess
 import sys
 
@@ -26,9 +27,11 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger("simon_fintech")
 
 SCRIPTS_DIR = "scripts"
+DESCRIPTIONS_DIR = "descriptions"
 PODCASTS_DIR = "podcasts"
 LAST_SCRIPT_FILE = "script_hier.txt"
 MIN_WORDS = 700
+MIN_BULLETS, MAX_BULLETS, MAX_BULLET_CHARS = 3, 6, 200
 INTRO = "Salut c'est Simon, bienvenue dans le podcast qui rend la finance et la tech simples et surtout passionnantes."
 OUTRO = "À demain pour un nouveau point sur l'actu tech !"
 
@@ -47,6 +50,8 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--title", required=True, help="Titre de l'épisode (sans date)")
     parser.add_argument("--script", default="script_today.txt")
+    parser.add_argument("--summary", default="resume_today.txt",
+                        help="Résumé en puces pour la description (1 info par ligne)")
     parser.add_argument("--push", action="store_true", help="commit + push vers GitHub Pages")
     args = parser.parse_args()
 
@@ -70,11 +75,27 @@ def main() -> int:
                 logger.error("Script identique à celui d'hier. Abandon.")
                 return 1
 
+    # Description de l'épisode : puces courtes, jamais le script
+    if not os.path.exists(args.summary):
+        logger.error(f"Résumé en puces introuvable ({args.summary}). Abandon.")
+        return 1
+    with open(args.summary, "r", encoding="utf-8") as f:
+        summary = f.read().strip()
+    bullets = [b for b in (re.sub(r"^\s*[-•*]\s*", "", l).strip() for l in summary.splitlines()) if b]
+    if not MIN_BULLETS <= len(bullets) <= MAX_BULLETS:
+        logger.error(f"Le résumé doit contenir {MIN_BULLETS} à {MAX_BULLETS} puces (trouvé : {len(bullets)}). Abandon.")
+        return 1
+    if any(len(b) > MAX_BULLET_CHARS for b in bullets):
+        logger.error(f"Une puce dépasse {MAX_BULLET_CHARS} caractères : une puce = une info courte. Abandon.")
+        return 1
+
     date_tag = datetime.date.today().strftime("%d-%m-%Y")
     base_name = f"{date_tag} - {_sanitize_filename(args.title)}"
     os.makedirs(SCRIPTS_DIR, exist_ok=True)
     os.makedirs(PODCASTS_DIR, exist_ok=True)
+    os.makedirs(DESCRIPTIONS_DIR, exist_ok=True)
     script_path = os.path.join(SCRIPTS_DIR, base_name + ".txt")
+    description_path = os.path.join(DESCRIPTIONS_DIR, base_name + ".txt")
     audio_path = os.path.join(PODCASTS_DIR, base_name + ".mp3")
 
     if os.path.exists(audio_path):
@@ -89,11 +110,13 @@ def main() -> int:
         f.write(script)
     with open(LAST_SCRIPT_FILE, "w", encoding="utf-8") as f:
         f.write(script)
+    with open(description_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(f"- {b}" for b in bullets) + "\n")
 
     generate_rss()
 
     if args.push:
-        _git("add", audio_path, script_path, "rss.xml", LAST_SCRIPT_FILE, "script_today.txt")
+        _git("add", audio_path, script_path, description_path, "rss.xml", LAST_SCRIPT_FILE, "script_today.txt")
         _git("commit", "-m", f"🎙️ Épisode du {date_tag} — {args.title}")
         _git("push", "origin", "main")
         logger.info("✅ Publié sur GitHub Pages (Spotify lit le flux RSS).")

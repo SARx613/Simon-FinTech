@@ -11,6 +11,7 @@ from feedgen.feed import FeedGenerator
 import datetime
 import os
 import re
+from html import escape
 from urllib.parse import quote
 
 # ─── Métadonnées du podcast (à personnaliser au besoin) ───
@@ -25,6 +26,18 @@ PODCAST_IMAGE = f"{SITE_BASE}/logo_podcast.png"
 PODCAST_CATEGORY = "Business"
 PODCAST_SUBCATEGORY = "Investing"
 PODCAST_EXPLICIT = "no"
+
+
+DESCRIPTIONS_DIR = "descriptions"
+
+
+def _load_bullets(path: str) -> list[str]:
+    """Lit un résumé : une info par ligne, préfixe « - » ou « • » facultatif."""
+    if not os.path.exists(path):
+        return []
+    with open(path, "r", encoding="utf-8") as f:
+        lines = [re.sub(r"^\s*[-•*]\s*", "", line).strip() for line in f]
+    return [line for line in lines if line]
 
 
 def _parse_date_from_filename(filename: str):
@@ -105,18 +118,15 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
         url = f"{SITE_BASE}/podcasts/{filename}"          # guid : inchangé, pour ne pas recréer les anciens épisodes
         audio_url = f"{SITE_BASE}/podcasts/{quote(filename)}"  # URL valide (espaces, accents, « : »)
 
-        # Description enrichie à partir du script texte s'il existe
+        # Description = résumé en puces (1 puce = 1 info), jamais le script complet
         stem = os.path.splitext(filename)[0]
-        script_path = os.path.join("scripts", stem + ".txt")
-        description_text = f"Épisode de Simon FinTech — {title}. Finance et tech décryptées."
-        if os.path.exists(script_path):
-            try:
-                with open(script_path, "r", encoding="utf-8") as sf:
-                    content = sf.read().strip()
-                    if content:
-                        description_text = content[:1500] + ("…" if len(content) > 1500 else "")
-            except Exception:
-                pass
+        bullets = _load_bullets(os.path.join(DESCRIPTIONS_DIR, stem + ".txt"))
+        if bullets:
+            description_text = "<ul>" + "".join(f"<li>{escape(b, quote=False)}</li>" for b in bullets) + "</ul>"
+            summary_text = " • ".join(bullets)
+        else:
+            description_text = f"Simon FinTech — {title}. L'actu qui fait bouger les marchés."
+            summary_text = description_text
 
         episode = fg.add_entry()
         episode.id(url)
@@ -126,7 +136,7 @@ def generate_rss(audio_folder="podcasts", output_file="rss.xml"):
         episode.pubDate(date_obj)
         # Balises iTunes au niveau de l'épisode
         episode.podcast.itunes_author(PODCAST_AUTHOR)
-        episode.podcast.itunes_summary(description_text[:250])
+        episode.podcast.itunes_summary(summary_text[:4000])
         episode.podcast.itunes_explicit(PODCAST_EXPLICIT)
         episodes_added += 1
 
